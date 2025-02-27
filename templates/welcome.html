@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Welcome to the Interview Quiz</h1>
+    <form id="start-quiz-form" action="/start-quiz" method="post">
+        <label for="name">Enter your name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="email">Enter your email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <!-- Hidden field to pass the quiz name -->
+        <input type="hidden" name="quiz_name" value="{{ quiz_name }}">
+
+        <input type="submit" id="start-quiz-btn" value="Start Quiz">
+    </form>
+</div>
+
+<script>
+    // Function to go full-screen
+    function goFullScreen() {
+        const elem = document.documentElement;  // Use the entire document (HTML element)
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.mozRequestFullScreen) {  // Firefox
+            elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) {  // Chrome, Safari, Opera
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) {  // IE/Edge
+            elem.msRequestFullscreen();
+        }
+    }
+
+    document.getElementById("start-quiz-form").addEventListener("submit", function (e) {
+        e.preventDefault();  // Prevent the form from submitting immediately
+
+        // Request full-screen mode
+        goFullScreen();
+
+        // Submit the form after entering full-screen mode
+        setTimeout(function () {
+            document.getElementById("start-quiz-form").submit();  // Submit the form
+        }, 200);  // Small delay to ensure full-screen mode is triggered
+    });
+</script>
+{% endblock %}
